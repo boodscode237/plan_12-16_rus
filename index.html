@@ -1,0 +1,1070 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Годовой курс ИИ для подростков 12-16 лет</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --color-primary: #1e293b;
+            --color-secondary: #475569;
+            --color-accent: #3b82f6;
+            --color-accent-light: #60a5fa;
+            --color-surface: #f8fafc;
+            --color-surface-dark: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .serif {
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .bento-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .toc {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .toc a {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--color-secondary);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toc a:hover,
+        .toc a.active {
+            color: var(--color-primary);
+            border-left-color: var(--color-accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .toc .level-2 {
+            margin-left: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .main-content {
+            margin-left: 340px;
+            padding: 2rem 4rem 2rem 2rem;
+        }
+        
+        .week-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--color-accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .week-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .citation {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .citation:hover {
+            color: var(--color-accent-light);
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(96, 165, 250, 0.05) 100%);
+            border-left: 4px solid var(--color-accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-accent) 0%, transparent 100%);
+            margin: 3rem 0;
+            border-radius: 1px;
+        }
+        
+        @media (max-width: 1280px) {
+            .toc {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .toc {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .week-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .module-badge {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+        }
+    </style>
+  </head>
+
+  <body>
+    <!-- Table of Contents -->
+    <nav class="toc">
+      <h3 class="text-lg font-bold mb-4 text-slate-800">Содержание</h3>
+      <a href="#hero" class="level-1">Введение</a>
+      <a href="#overview" class="level-1">Обзор программы</a>
+      <a href="#module1" class="level-1">Модуль 1: Python (11 недель)</a>
+      <a href="#week1-2" class="level-2">Недели 1-2: Основы Python</a>
+      <a href="#week3-4" class="level-2">Недели 3-4: Функции и структуры данных</a>
+      <a href="#week5-6" class="level-2">Недели 5-6: Словари и ООП</a>
+      <a href="#week7-8" class="level-2">Недели 7-8: Файлы и модули</a>
+      <a href="#week9-11" class="level-2">Недели 9-11: GUI и проекты</a>
+      <a href="#module2" class="level-1">Модуль 2: Математика для ИИ (5 недель)</a>
+      <a href="#week12" class="level-2">Неделя 12: Введение в ИИ</a>
+      <a href="#week13-14" class="level-2">Недели 13-14: Линейная алгебра</a>
+      <a href="#week15-16" class="level-2">Недели 15-16: Статистика</a>
+      <a href="#module3" class="level-1">Модуль 3: Машинное обучение (14 недель)</a>
+      <a href="#week17-18" class="level-2">Недели 17-18: Введение в ML</a>
+      <a href="#week19-20" class="level-2">Недели 19-20: Регрессия</a>
+      <a href="#week21-22" class="level-2">Недели 21-22: Классификация</a>
+      <a href="#week23-24" class="level-2">Недели 23-24: Кластеризация</a>
+      <a href="#week25-26" class="level-2">Недели 25-26: Нейронные сети</a>
+      <a href="#week27-28" class="level-2">Недели 27-28: NLP</a>
+      <a href="#module4" class="level-1">Модуль 4: Компьютерное зрение (10 недель)</a>
+      <a href="#module5" class="level-1">Модуль 5: Финальные проекты (4 недели)</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section id="hero" class="mb-16">
+        <div class="hero-grid mb-12">
+          <div>
+            <h1 class="text-4xl md:text-6xl font-bold serif gradient-text mb-6 leading-tight">
+              <em>Искусственный интеллект</em>
+              <br/>
+              для нового поколения
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed">
+              Годовая образовательная программа для подростков 12-16 лет, разработанная для погружения в мир ИИ через практическое обучение и проекты.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <div class="skill-tag">Python</div>
+              <div class="skill-tag">Машинное обучение</div>
+              <div class="skill-tag">NLP</div>
+              <div class="skill-tag">Компьютерное зрение</div>
+              <div class="skill-tag">Проекты</div>
+            </div>
+          </div>
+          <div class="bento-card floating-element">
+            <img src="https://kimi-web-img.moonshot.cn/img/media.istockphoto.com/ec8390839aafa5123a25119ffcdc758ea2fb99eb.jpg" alt="Подростки работают за компьютерами в современном классе" class="w-full h-64 object-cover rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="подростки за компьютерами в классе" referrerpolicy="no-referrer" data-modified="1" data-score="11599.00"/>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-slate-800">16</div>
+              <div class="text-sm text-slate-600">часов в неделю</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bento-card">
+            <i class="fas fa-code text-2xl text-blue-600 mb-3"></i>
+            <h3 class="font-semibold text-slate-800 mb-2">Программирование</h3>
+            <p class="text-sm text-slate-600">11 недель Python с нуля до продвинутого уровня</p>
+          </div>
+          <div class="bento-card">
+            <i class="fas fa-brain text-2xl text-purple-600 mb-3"></i>
+            <h3 class="font-semibold text-slate-800 mb-2">ИИ и ML</h3>
+            <p class="text-sm text-slate-600">14 недель машинного обучения и нейронных сетей</p>
+          </div>
+          <div class="bento-card">
+            <i class="fas fa-project-diagram text-2xl text-green-600 mb-3"></i>
+            <h3 class="font-semibold text-slate-800 mb-2">Проекты</h3>
+            <p class="text-sm text-slate-600">Создание реальных приложений и игр с ИИ</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Program Overview -->
+      <section id="overview" class="mb-16">
+        <div class="section-divider"></div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Обзор программы</h2>
+
+        <div class="highlight-box">
+          <h3 class="text-xl font-semibold mb-4">Ключевые особенности</h3>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-blue-600 mt-1 mr-3"></i>
+              <span><strong>Годовая программа</strong> (44 недели) с интенсивностью 16 часов в неделю</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-blue-600 mt-1 mr-3"></i>
+              <span><strong>5 модулей</strong>: Python, математика для ИИ, машинное обучение, NLP, компьютерное зрение</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-blue-600 mt-1 mr-3"></i>
+              <span><strong>Практический подход</strong>: проекты после каждого модуля, мастер-классы</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fas fa-check-circle text-blue-600 mt-1 mr-3"></i>
+              <span><strong>Современные инструменты</strong>: Python, Scikit-learn, TensorFlow, PyTorch, OpenCV</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mt-8">
+          <div class="bento-card">
+            <h3 class="text-xl font-semibold mb-4">Для кого эта программа?</h3>
+            <ul class="space-y-2 text-slate-600">
+              <li>• Подростки 12-16 лет без опыта программирования</li>
+              <li>• Школьники, интересующиеся технологиями и ИИ</li>
+              <li>• Будущие разработчики и исследователи</li>
+              <li>• Творческие личности, желающие создавать умные приложения</li>
+            </ul>
+          </div>
+          <div class="bento-card">
+            <h3 class="text-xl font-semibold mb-4">Что вы получите?</h3>
+            <ul class="space-y-2 text-slate-600">
+              <li>• Глубокое понимание Python и библиотек для ИИ</li>
+              <li>• Практические навыки работы с данными и моделями</li>
+              <li>• Портфолио реальных проектов</li>
+              <li>• Основы для дальнейшего изучения ИИ</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 1: Python -->
+      <section id="module1" class="mb-16">
+        <div class="section-divider"></div>
+        <div class="module-badge">Модуль 1</div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Введение в Python (11 недель)</h2>
+
+        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+          Первый модуль посвящен основам программирования на Python — языке, который стал стандартом в индустрии ИИ.
+          <a href="https://brightchamps.com/blog/python-coding-for-kids/" class="citation" target="_blank">Python идеально подходит для начинающих</a>
+          благодаря простому синтаксису, напоминающему естественный язык, и огромному сообществу разработчиков.
+        </p>
+
+        <!-- Week 1-2 -->
+        <div id="week1-2" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 1-2: Основы Python и управление потоком выполнения</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h4 class="font-semibold mb-3">Цели обучения:</h4>
+              <ul class="space-y-1 text-sm text-slate-600">
+                <li>• Понимать базовые принципы программирования</li>
+                <li>• Освоить типы данных и переменные</li>
+                <li>• Научиться использовать условные операторы</li>
+                <li>• Применять циклы для автоматизации задач</li>
+                <li>• Работать со списками</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-3">Темы:</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="skill-tag">Установка Python</span>
+                <span class="skill-tag">Переменные</span>
+                <span class="skill-tag">Условные операторы</span>
+                <span class="skill-tag">Циклы for/while</span>
+                <span class="skill-tag">Списки</span>
+                <span class="skill-tag">Turtle graphics</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Создаем текстовую игру-приключение&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Применяем знания по основам Python для создания интерактивной текстовой игры, где выбор игрока влияет на сюжет.
+              Используем условия, циклы и строки для реализации игровой логики.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 3-4 -->
+        <div id="week3-4" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 3-4: Функции и структуры данных (списки, кортежи)</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h4 class="font-semibold mb-3">Цели обучения:</h4>
+              <ul class="space-y-1 text-sm text-slate-600">
+                <li>• Создавать и использовать функции</li>
+                <li>• Понимать области видимости переменных</li>
+                <li>• Углубить знания по работе со списками</li>
+                <li>• Освоить кортежи и их свойства</li>
+                <li>• Обрабатывать исключения</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-3">Источники:</h4>
+              <ul class="space-y-1 text-sm">
+                <li>• <a href="https://www.codingal.com/courses/python-for-kids/" class="citation" target="_blank">Python for Kids - Codingal</a>
+                </li>
+                <li>• <a href="https://www.create-learn.us/coding-for-kids/python" class="citation" target="_blank">Python Class - Create &amp; Learn</a>
+                </li>
+                <li>• <a href="https://shortcourses.rmit.edu.au/products/fs-ai-programming-with-python-air103u" class="citation" target="_blank">AI Programming with Python - RMIT</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Week 5-6 -->
+        <div id="week5-6" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 5-6: Словари, множества и основы ООП</h3>
+
+          <div class="mb-6">
+            <h4 class="font-semibold mb-3">Темы для изучения:</h4>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <h5 class="font-medium text-slate-700 mb-2">Словари и множества:</h5>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Создание и работа со словарями</li>
+                  <li>• Методы keys(), values(), items()</li>
+                  <li>• Операции над множествами</li>
+                  <li>• Удаление дубликатов</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="font-medium text-slate-700 mb-2">ООП:</h5>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Классы и объекты</li>
+                  <li>• Методы и атрибуты</li>
+                  <li>• Конструктор __init__</li>
+                  <li>• Простое наследование</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Система управления библиотекой&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Создаем систему учета книг с использованием классов и словарей. Каждая книга — объект с атрибутами,
+              а библиотека — словарь объектов. Добавляем функции поиска, выдачи и возврата книг.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 7-8 -->
+        <div id="week7-8" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 7-8: Работа с файлами, обработка исключений, модули</h3>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Работа с файлами</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Открытие и закрытие файлов</li>
+                <li>• Чтение и запись данных</li>
+                <li>• Контекстный менеджер with</li>
+                <li>• CSV и текстовые файлы</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Обработка исключений</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• try-except-else-finally</li>
+                <li>• Типы исключений</li>
+                <li>• Обработка ошибок ввода</li>
+                <li>• Собственные исключения</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Модули и библиотеки</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Импорт модулей</li>
+                <li>• Стандартная библиотека</li>
+                <li>• Установка pip</li>
+                <li>• math, random, datetime</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Week 9-11 -->
+        <div id="week9-11" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 9-11: Pygame/Tkinter и итоговые проекты</h3>
+
+          <p class="text-slate-600 mb-6">
+            Завершаем модуль созданием графических приложений и игр. Учащиеся выбирают между
+            <a href="https://www.codingal.com/courses/python-for-kids/" class="citation" target="_blank">Tkinter для GUI-приложений</a>
+            и <a href="https://github.com/ehartford/pythonforkids" class="citation" target="_blank">Pygame для 2D-игр</a>.
+          </p>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Итоговые проекты:</h4>
+            <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-600">
+              <div>
+                <h5 class="font-medium text-slate-700">Pygame:</h5>
+                <ul class="space-y-1">
+                  <li>• Игра &#34;Змейка&#34;</li>
+                  <li>• Платформер</li>
+                  <li>• Аркада &#34;Понг&#34;</li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="font-medium text-slate-700">Tkinter:</h5>
+                <ul class="space-y-1">
+                  <li>• Графический калькулятор</li>
+                  <li>• Текстовый редактор</li>
+                  <li>• To-Do List приложение</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 2: Math for AI -->
+      <section id="module2" class="mb-16">
+        <div class="section-divider"></div>
+        <div class="module-badge">Модуль 2</div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Математические основы ИИ (5 недель)</h2>
+
+        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+          Этот модуль закладывает математический фундамент для понимания алгоритмов ИИ. Мы фокусируемся на практическом применении математики,
+          используя <a href="https://www.geeksforgeeks.org/courses/artificial-intelligence-course-for-kids" class="citation" target="_blank">адаптированные для подростков материалы</a>
+          и библиотеки Python.
+        </p>
+
+        <!-- Week 12 -->
+        <div id="week12" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Неделя 12: Введение в ИИ</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h4 class="font-semibold mb-3">Ключевые темы:</h4>
+              <ul class="space-y-2 text-sm text-slate-600">
+                <li>• <strong>Определение ИИ:</strong> Сильный vs слабый ИИ</li>
+                <li>• <strong>История развития:</strong> От Тьюринга до глубокого обучения</li>
+                <li>• <strong>Основные понятия:</strong> ML, нейронные сети, алгоритмы</li>
+                <li>• <strong>Приложения:</strong> Голосовые помощники, рекомендации</li>
+                <li>• <strong>Этические аспекты:</strong> Конфиденциальность, предвзятость</li>
+              </ul>
+            </div>
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/gb.ru/1c9a186f66ea931c244c9505f55ee0b8f76c769b.jpg" alt="История развития искусственного интеллекта" class="w-full h-48 object-cover rounded-lg" size="medium" aspect="wide" query="история искусственного интеллекта" referrerpolicy="no-referrer" data-modified="1" data-score="11598.00"/>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Умный помощник на Scratch&#34;</h4>
+            <p class="text-sm text-slate-600 mb-3">
+              Создаем простого чат-бота с использованием <a href="https://machinelearningforkids.co.uk/worksheets" class="citation" target="_blank">Scratch и Teachable Machine</a>.
+              Учащиеся обучают модель распознавать команды и создают интерактивного персонажа, который отвечает на вопросы.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Scratch</span>
+              <span class="skill-tag">Teachable Machine</span>
+              <span class="skill-tag">Простое ML</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Week 13-14 -->
+        <div id="week13-14" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 13-14: Линейная алгебра для ИИ</h3>
+
+          <div class="mb-6">
+            <h4 class="font-semibold mb-3">Векторы и матрицы:</h4>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bento-card">
+                <h5 class="font-medium mb-2">Векторы</h5>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Геометрическая интерпретация</li>
+                  <li>• Операции: сложение, скалярное умножение</li>
+                  <li>• Скалярное произведение</li>
+                  <li>• Норма вектора</li>
+                  <li>• Применение в ИИ: признаки, веса</li>
+                </ul>
+              </div>
+              <div class="bento-card">
+                <h5 class="font-medium mb-2">Матрицы</h5>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Основные операции</li>
+                  <li>• Умножение матриц</li>
+                  <li>• Транспонирование</li>
+                  <li>• Определитель и обратная матрица</li>
+                  <li>• Применение: данные, преобразования</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Рекомендательная система&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Реализуем простую систему рекомендаций фильмов, основанную на косинусном сходстве векторов.
+              Используем NumPy для работы с векторами и матрицами предпочтений пользователей.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 15-16 -->
+        <div id="week15-16" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 15-16: Статистика и вероятность</h3>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Описательная статистика</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Среднее, медиана, мода</li>
+                <li>• Дисперсия и стандартное отклонение</li>
+                <li>• Квантили и квартили</li>
+                <li>• Визуализация: гистограммы, box-plot</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Теория вероятностей</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Случайные события и вероятность</li>
+                <li>• Условная вероятность</li>
+                <li>• Теорема Байеса</li>
+                <li>• Нормальное распределение</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Применение в ИИ</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Анализ данных</li>
+                <li>• Оценка моделей</li>
+                <li>• Байесовские методы</li>
+                <li>• Генеративные модели</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Предсказание погоды&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Анализируем данные о погоде с использованием Pandas и Matplotlib. Строим простую модель предсказания
+              вероятности дождя на основе статистических показателей и исторических данных.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 3: Machine Learning -->
+      <section id="module3" class="mb-16">
+        <div class="section-divider"></div>
+        <div class="module-badge">Модуль 3</div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Машинное обучение и NLP (14 недель)</h2>
+
+        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+          Практический модуль, посвященный основным алгоритмам машинного обучения и обработке естественного языка.
+          Используем <a href="https://github.com/microsoft/ML-For-Beginners" class="citation" target="_blank">Scikit-learn и другие библиотеки</a>
+          для создания реальных моделей.
+        </p>
+
+        <!-- Week 17-18 -->
+        <div id="week17-18" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 17-18: Введение в машинное обучение</h3>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bento-card">
+              <h5 class="font-medium mb-2 text-blue-600">Обучение с учителем</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Классификация</li>
+                <li>• Регрессия</li>
+                <li>• Примеры: спам-фильтры, прогнозирование</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2 text-purple-600">Обучение без учителя</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Кластеризация</li>
+                <li>• Снижение размерности</li>
+                <li>• Примеры: сегментация, анализ данных</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2 text-green-600">С подкреплением</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Агент и среда</li>
+                <li>• Награды и политики</li>
+                <li>• Примеры: игры, роботы</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Классификация ирисов&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Работаем с классическим набором данных Iris. Используем KNN для классификации цветков по измерениям.
+              Практикуем загрузку данных, разделение на выборки, обучение модели и оценку точности.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 19-20 -->
+        <div id="week19-20" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 19-20: Регрессия (линейная, полиномиальная)</h3>
+
+          <div class="mb-6">
+            <h4 class="font-semibold mb-3">Ключевые концепции:</h4>
+            <div class="space-y-4">
+              <div class="bento-card">
+                <h5 class="font-medium mb-2">Линейная регрессия</h5>
+                <p class="text-sm text-slate-600 mb-2">y = wx + b</p>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Метод наименьших квадратов</li>
+                  <li>• Функция потерь MSE</li>
+                  <li>• Интерпретация коэффициентов</li>
+                </ul>
+              </div>
+              <div class="bento-card">
+                <h5 class="font-medium mb-2">Полиномиальная регрессия</h5>
+                <p class="text-sm text-slate-600 mb-2">y = w₀ + w₁x + w₂x² + ...</p>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Моделирование нелинейных зависимостей</li>
+                  <li>• Проблема переобучения</li>
+                  <li>• Выбор степени полинома</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Week 21-22 -->
+        <div id="week21-22" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 21-22: Классификация (KNN, логистическая регрессия, SVM)</h3>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">K-ближайших соседей</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Принцип &#34;голосования&#34;</li>
+                <li>• Выбор k и метрики расстояния</li>
+                <li>• Плюсы: простота, интерпретируемость</li>
+                <li>• Минусы: медленный на больших данных</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Логистическая регрессия</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Сигмоидная функция</li>
+                <li>• Вероятность класса</li>
+                <li>• Максимальное правдоподобие</li>
+                <li>• Интерпретация коэффициентов</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Метод опорных векторов</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Разделяющая гиперплоскость</li>
+                <li>• Максимизация зазора</li>
+                <li>• Ядерный трюк</li>
+                <li>• Линейное и RBF ядра</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Спам-фильтр&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Создаем фильтр спама с использованием различных алгоритмов классификации. Работаем с реальными данными писем,
+              преобразовываем текст в числовые признаки (Bag of Words) и сравниваем эффективность моделей.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 23-24 -->
+        <div id="week23-24" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 23-24: Кластеризация (K-средних)</h3>
+
+          <div class="mb-6">
+            <h4 class="font-semibold mb-3">Алгоритм K-средних:</h4>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h5 class="font-medium mb-2">Шаги алгоритма:</h5>
+                <ol class="text-sm text-slate-600 space-y-1 list-decimal list-inside">
+                  <li>Инициализация K центроидов</li>
+                  <li>Назначение точек ближайшим центроидам</li>
+                  <li>Пересчет позиций центроидов</li>
+                  <li>Повторение до сходимости</li>
+                </ol>
+              </div>
+              <div>
+                <h5 class="font-medium mb-2">Выбор K:</h5>
+                <ul class="text-sm text-slate-600 space-y-1">
+                  <li>• Метод локтя (Elbow method)</li>
+                  <li>• Анализ силуэта (Silhouette)</li>
+                  <li>• Визуальная оценка</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Сегментация клиентов&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Применяем K-средних для сегментации клиентов интернет-магазина. Анализируем поведенческие данные,
+              определяем оптимальное число кластеров и разрабатываем маркетинговые стратегии для каждого сегмента.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 25-26 -->
+        <div id="week25-26" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 25-26: Нейронные сети и глубокое обучение</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <h4 class="font-semibold mb-3">Основные компоненты:</h4>
+              <ul class="space-y-2 text-sm text-slate-600">
+                <li>• <strong>Нейрон:</strong> взвешенная сумма + функция активации</li>
+                <li>• <strong>Слои:</strong> входной, скрытые, выходной</li>
+                <li>• <strong>Функции активации:</strong> ReLU, сигмоидная, softmax</li>
+                <li>• <strong>Обучение:</strong> обратное распространение ошибки</li>
+                <li>• <strong>Оптимизация:</strong> градиентный спуск</li>
+              </ul>
+            </div>
+            <div>
+              <img src="https://kimi-web-img.moonshot.cn/img/placeholder-0620/%E5%9B%BE%E7%89%8723.png" alt="Схема простой нейронной сети с тремя слоями" class="w-full h-48 object-cover rounded-lg" size="small" aspect="wide" style="linedrawing" query="нейронная сеть три слоя" referrerpolicy="no-referrer" data-modified="1" data-score="10000.00"/>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Распознавание рукописных цифр&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Создаем и обучаем нейронную сеть для классификации цифр из набора данных MNIST.
+              Используем Keras/TensorFlow для реализации сети с одним скрытым слоем.
+              Визуализируем процесс обучения и анализируем результаты.
+            </p>
+          </div>
+        </div>
+
+        <!-- Week 27-28 -->
+        <div id="week27-28" class="week-card">
+          <h3 class="text-xl font-semibold mb-4">Недели 27-28: NLP - основы, токенизация, стемминг</h3>
+
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Предобработка текста</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Токенизация</li>
+                <li>• Нормализация</li>
+                <li>• Удаление стоп-слов</li>
+                <li>• Стемминг и лемматизация</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Векторизация</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Мешок слов (Bag of Words)</li>
+                <li>• TF-IDF</li>
+                <li>• One-hot encoding</li>
+                <li>• Word embeddings (кратко)</li>
+              </ul>
+            </div>
+            <div class="bento-card">
+              <h5 class="font-medium mb-2">Библиотеки</h5>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• NLTK</li>
+                <li>• spaCy</li>
+                <li>• Scikit-learn</li>
+                <li>• Gensim (кратко)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4 class="font-semibold mb-2">Мастер-класс: &#34;Анализ тональности отзывов&#34;</h4>
+            <p class="text-sm text-slate-600">
+              Разрабатываем систему анализа тональности текста. Обрабатываем отзывы о фильмах,
+              преобразуем текст в числовые признаки с помощью TF-IDF и обучаем классификатор определять,
+              является ли отзыв позитивным или негативным.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 4: Computer Vision -->
+      <section id="module4" class="mb-16">
+        <div class="section-divider"></div>
+        <div class="module-badge">Модуль 4</div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Компьютерное зрение (10 недель)</h2>
+
+        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+          Изучаем методы анализа и обработки изображений с использованием OpenCV и современных нейронных сетей.
+          Учащиеся создают системы распознавания объектов, фильтры для изображений и другие приложения компьютерного зрения.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bento-card">
+            <h3 class="text-xl font-semibold mb-4">Основные темы модуля</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fas fa-image text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <strong>Обработка изображений:</strong> фильтры, преобразования, морфологические операции
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-search text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <strong>Распознавание объектов:</strong> классические методы и нейронные сети
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-camera text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <strong>Детекция лиц:</strong> алгоритмы Viola-Jones и глубокое обучение
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-brain text-blue-600 mt-1 mr-3"></i>
+                <div>
+                  <strong>Сверточные сети (CNN):</strong> архитектура, обучение, применение
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="bento-card">
+            <img src="https://kimi-web-img.moonshot.cn/img/perspektiva-inva.ru/6e24661d58fab64dd85bc95042d5e2d65579cf1f.jpg" alt="Подростки работают над проектом компьютерного зрения" class="w-full h-48 object-cover rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="подростки работают над проектом компьютерного зрения" referrerpolicy="no-referrer" data-modified="1" data-score="11599.00"/>
+            <h4 class="font-semibold mb-2">Проекты модуля:</h4>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Фильтры для фото (размытие, детализация)</li>
+              <li>• Детектор эмоций по лицу</li>
+              <li>• Система распознавания жестов</li>
+              <li>• Простая AR-игра</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 5: Final Projects -->
+      <section id="module5" class="mb-16">
+        <div class="section-divider"></div>
+        <div class="module-badge">Модуль 5</div>
+        <h2 class="text-3xl font-bold serif text-slate-800 mb-8">Финальные проекты и мастер-классы (4 недели)</h2>
+
+        <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+          Заключительный модуль посвящен созданию комплексных проектов, объединяющих знания из всех пройденных модулей.
+          Учащиеся работают в командах над реальными приложениями ИИ.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <div class="bento-card">
+            <h4 class="font-semibold mb-3 text-blue-600">Индивидуальные проекты</h4>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Выбор темы и постановка задачи</li>
+              <li>• Сбор и анализ данных</li>
+              <li>• Разработка и обучение модели</li>
+              <li>• Тестирование и улучшение</li>
+            </ul>
+          </div>
+          <div class="bento-card">
+            <h4 class="font-semibold mb-3 text-green-600">Командные проекты</h4>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Распределение ролей в команде</li>
+              <li>• Совместная разработка</li>
+              <li>• Интеграция компонентов</li>
+              <li>• Подготовка презентации</li>
+            </ul>
+          </div>
+          <div class="bento-card">
+            <h4 class="font-semibold mb-3 text-purple-600">Мастер-классы</h4>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Разбор сложных тем</li>
+              <li>• Решение проблем в реальном времени</li>
+              <li>• Гостевые лекции</li>
+              <li>• Подготовка к презентациям</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h3 class="text-xl font-semibold mb-4">Примеры проектов:</h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2">Индивидуальные:</h4>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Умный планировщик заданий с рекомендациями</li>
+                <li>• Система распознавания растений по фото</li>
+                <li>• Чат-бот с анализом эмоций</li>
+                <li>• Генератор текстовых историй</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2">Командные:</h4>
+              <ul class="text-sm text-slate-600 space-y-1">
+                <li>• Образовательная игра с ИИ-персонажами</li>
+                <li>• Система мониторинга успеваемости</li>
+                <li>• Платформа для исследования данных</li>
+                <li>• Приложение для изучения языков с ИИ</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Conclusion -->
+      <section class="mb-16">
+        <div class="section-divider"></div>
+        <div class="text-center">
+          <h2 class="text-3xl font-bold serif text-slate-800 mb-6">Начните свое путешествие в мир ИИ</h2>
+          <p class="text-lg text-slate-600 mb-8 max-w-3xl mx-auto">
+            Эта программа — не просто курс обучения, а путь преобразования интереса в профессиональные навыки.
+            Через год интенсивной практики учащиеся не только освоят фундаментальные концепции ИИ,
+            но и создадут портфолио реальных проектов, которые могут стать началом их карьеры в технологиях.
+          </p>
+          <div class="flex justify-center space-x-6">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-blue-600">44</div>
+              <div class="text-sm text-slate-600">недели обучения</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-green-600">700+</div>
+              <div class="text-sm text-slate-600">часов практики</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-purple-600">∞</div>
+              <div class="text-sm text-slate-600">возможностей</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active link highlighting
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.toc a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+  
+
+</body></html>
